@@ -2,8 +2,6 @@
 
 ## 1) Install catboost and scikit learn
 
-The two packages should already be in `.venv`, but if for whatever reason they aren't install them.
-
 ```bash
 pip install catboost scikit-learn
 ```
