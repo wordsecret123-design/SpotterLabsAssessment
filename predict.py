@@ -76,8 +76,67 @@ if __name__ == "__main__":
     dfValToSave = pd.read_csv("TemplatesCSV/validation.csv")
     dfValPredToSave = pd.read_csv("TemplatesCSV/validation-predictions-template.csv")
     dfDecemberChart = pd.read_csv("TemplatesCSV/december-chart-inputs.csv")
+    dictMissingInDec = { 
+        "pickup_lat": [
+            float(
+                dfValToSave[
+                    (dfValToSave["pickup"] == "Lexington")&
+                    (dfValToSave["delivery"] == "Fort Wayne")&
+                    (dfValToSave["equipment"] == "Dry Van")
+                ].iloc[0]["pickup_lon"]
+            )
+        ] * len(dfDecemberChart)
+        ,
+        "pickup_lon": [
+            float(
+                dfValToSave[
+                    (dfValToSave["pickup"] == "Lexington")&
+                    (dfValToSave["delivery"] == "Fort Wayne")&
+                    (dfValToSave["equipment"] == "Dry Van")
+                ].iloc[0]["pickup_lon"]
+            )
+        ] * len(dfDecemberChart),
+        "delivery_lat": [
+            float(
+                dfValToSave[
+                    (dfValToSave["pickup"] == "Lexington")&
+                    (dfValToSave["delivery"] == "Fort Wayne")&
+                    (dfValToSave["equipment"] == "Dry Van")
+                ].iloc[0]["delivery_lat"]
+            )
+        ] * len(dfDecemberChart)
+        ,
+        "delivery_lon": [
+            float(
+                dfValToSave[
+                    (dfValToSave["pickup"] == "Lexington")&
+                    (dfValToSave["delivery"] == "Fort Wayne")&
+                    (dfValToSave["equipment"] == "Dry Van")
+                ].iloc[0]["delivery_lon"]
+            )
+        ] * len(dfDecemberChart),
+        "market_index": [
+            float(
+                dfValToSave[
+                    (dfValToSave["pickup"] == "Lexington")&
+                    (dfValToSave["delivery"] == "Fort Wayne")&
+                    (dfValToSave["equipment"] == "Dry Van")
+                ]["market_index"].mean()
+            )
+        ] * len(dfDecemberChart),
+        "quote_signal": [
+            float(
+                dfValToSave[
+                    (dfValToSave["pickup"] == "Lexington")&
+                    (dfValToSave["delivery"] == "Fort Wayne")&
+                    (dfValToSave["equipment"] == "Dry Van")
+                ]["quote_signal"].mean()
+            )
+        ] * len(dfDecemberChart)
+    }
+    
     for decemberMissing in decemberChartMissing:
-        dfDecemberChart[decemberMissing] = np.nan
+        dfDecemberChart[decemberMissing] = dictMissingInDec[decemberMissing]
     # print(cleaner.ifCellIsEmptyGetColumn(columns[:13],df))
     # print(cleaner.checkHowManyCellsEmpty(columns[:13],df))
     # print(cleaner.checkHowManyCellsNegative(numericalFeatures[1:5],df))
